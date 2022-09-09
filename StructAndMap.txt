@@ -1,0 +1,103 @@
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+
+
+//ALL ABOUT MAP
+
+
+contract Map{
+
+    //defining emp_id with key as any defined number and value as name of type string in it
+mapping(uint256 => string) public emp_id;
+constructor(uint256 _id, string memory _name) { //one way
+    emp_id[_id] = _name;
+    //hardcode values
+    emp_id[_id+1] = "mohd";
+}
+
+
+//defining emp_id with key as any defined number and address of owner in it
+mapping(uint256 => address) public emp_id2;
+
+function setOwnerAndId(uint256 _id) public {
+    emp_id2[_id] = msg.sender;
+}
+
+}
+
+
+
+//ALL ABOUT STRUCT
+
+struct employee {
+    uint256 id;
+    string name;
+    uint256 salary;
+}
+
+contract Struct {
+    
+    employee public emp = employee(123, "parvez", 10000);  //one way to define
+
+
+
+    employee public emp1;
+
+    constructor(uint _id, string memory _name, uint256 _salary) {
+        emp1.id = _id;
+        emp1.name = _name;
+        emp1.salary = _salary;
+    }                                                         //second way of defining
+
+
+
+
+        employee public emp2;
+     function setEmployee(uint _id, string memory _name, uint256 _salary) public {   //third way of defining
+        emp2.id = _id;
+        emp2.name = _name;
+        emp2.salary = _salary;
+   }
+   function getEmployee() public view returns (employee memory) {
+      return emp2;
+   }
+
+
+   //STORAGE VS MEMORY
+   //storage refers to address of the value and changes if the assigned value changed 
+   // memory assings new values to it and doesn't effects any changes to previous one
+
+
+
+
+}
+
+
+
+//USING STRUCT AND MAP IN ONE CONTRACT
+
+contract StructMap {
+    //defining student with id, name and class
+    struct student {
+        uint id;
+        string name;
+        uint class;
+    }
+
+//defining map which maps address of the owner with its particular entered student details
+
+mapping(address => student) public studentmap;
+
+function setStudent(uint _id, string memory _name, uint _class)  public {
+
+studentmap[msg.sender] = student(_id, _name, _class);  //setting the values of each owner who calls this function
+
+}
+
+function deleteFunction() public {
+delete studentmap[msg.sender];
+}  
+
+}
